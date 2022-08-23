@@ -16,4 +16,7 @@ public interface EmployeeService {
      * @return R 封装返回结构
      */
     R<Employee> login(Employee employee);
+
+    //保存员工
+    void save(Employee employee);
 }

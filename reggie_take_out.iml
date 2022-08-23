@@ -13,6 +13,18 @@
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
+    <facet type="JRebel" name="JRebel">
+      <configuration>
+        <option name="ideModuleStorage">
+          <map>
+            <entry key="com.zeroturnaround.jrebel.FormatVersion" value="7.0.0" />
+            <entry key="jrebelEnabled" value="false" />
+            <entry key="lastExternalPluginCheckTime" value="1661136898313" />
+          </map>
+        </option>
+        <option name="version" value="8" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -99,8 +111,8 @@
     <orderEntry type="library" name="Maven: com.alibaba:druid:1.1.23" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.36" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.7.3" level="project" />
-    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper-spring-boot-starter:1.4.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper-spring-boot-autoconfigure:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper-spring-boot-starter:1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper-spring-boot-autoconfigure:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper:5.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:4.2" level="project" />
     <orderEntry type="library" name="Maven: com.aliyun:aliyun-java-sdk-core:4.5.16" level="project" />
