@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
 
 spring:
   application:
@@ -22,3 +22,9 @@ mybatis:
     # 日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.qinan.reggie.entity
+
+
+#设置pageHelper开关
+pagehelper:
+  auto-dialect: true
+  reasonable: true

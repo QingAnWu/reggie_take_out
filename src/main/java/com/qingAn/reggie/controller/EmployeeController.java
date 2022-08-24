@@ -2,12 +2,10 @@ package com.qingAn.reggie.controller;
 
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Employee;
+import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,7 +28,6 @@ public class EmployeeController {
     @RequestMapping("/login")
     public R<Employee> login(@RequestBody Employee employee, HttpSession session) {
         R<Employee> r = employeeService.login(employee);
-
         if (r.getCode() == 1) {
             session.setAttribute("employee", r.getData());
         }
@@ -53,16 +50,30 @@ public class EmployeeController {
      *
      * @param employee 用于封装json的数据
      * @param session  会话域
-     * @return
+     * @return 保存成功
      */
     @PostMapping
     public R<String> save(@RequestBody Employee employee, HttpSession session) {
         //1. 获取当前登陆的用户,补全员工的创建者与修改者
-        Long empId = (Long) session.getAttribute("employee");
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        Employee loginEmployee = (Employee) session.getAttribute("employee");
+        employee.setCreateUser(loginEmployee.getId());
+        employee.setUpdateUser(loginEmployee.getId());
         //2. 把数据交给service
         employeeService.save(employee);
         return R.success("保存成功");
+    }
+
+    /**
+     * 作用： 员工列表分页
+     *
+     * @param page     当前页
+     * @param pageSize 页面大小
+     * @param name     用户名
+     * @return pageResult
+     */
+    @GetMapping("/page")
+    public R<Page<Employee>> page(Integer page, Integer pageSize, String name) {
+        Page<Employee> pageResult = employeeService.findByPage(page, pageSize, name);
+        return R.success(pageResult);
     }
 }

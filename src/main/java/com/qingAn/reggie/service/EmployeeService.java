@@ -3,6 +3,7 @@ package com.qingAn.reggie.service;
 
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Employee;
+import com.qingAn.reggie.entity.Page;
 
 /**
  * @author qingAn
@@ -12,11 +13,26 @@ public interface EmployeeService {
 
     /**
      * 登录的方法
+     *
      * @param employee 员工数据
      * @return R 封装返回结构
      */
     R<Employee> login(Employee employee);
 
-    //保存员工
+    /**
+     * 保存员工
+     *
+     * @param employee 员工数据
+     */
     void save(Employee employee);
+
+    /**
+     * 作用： 员工列表分页
+     *
+     * @param page     当前页
+     * @param pageSize 页面大小
+     * @param name     用户名
+     * @return Page 返回封装的数据
+     */
+    Page<Employee> findByPage(Integer page, Integer pageSize, String name);
 }
