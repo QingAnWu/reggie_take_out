@@ -35,4 +35,13 @@ public interface EmployeeService {
      * @return Page 返回封装的数据
      */
     Page<Employee> findByPage(Integer page, Integer pageSize, String name);
+
+    void update(Employee employee);
+
+    /**
+     * 根据id查找员工
+     * @param id
+     * @return
+     */
+    R<Employee> findById(Long id);
 }

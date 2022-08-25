@@ -26,6 +26,7 @@ public interface EmployeeMapper {
 
     /**
      * 插入数据
+     *
      * @param employee 员工数据
      */
     @Insert("insert into employee values(null,#{name},#{username},#{password},#{phone},#{sex},#{idNumber},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})")
@@ -33,8 +34,19 @@ public interface EmployeeMapper {
 
     /**
      * 模糊查询分页
+     *
      * @param name %name% 员工姓名
      * @return List<Employee> 员工数据
      */
     List<Employee> findByName(@Param("name") String name);
+
+    /**
+     * 更新员工信息
+     *
+     * @param employee 员工数据
+     */
+    void update(Employee employee);
+
+    @Select("select * from employee where id=#{id} ")
+    Employee findById(Long id);
 }

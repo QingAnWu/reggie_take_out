@@ -21,7 +21,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     /**
-     * 登录 http://localhost:8080/employee/login
+     * 登录
      *
      * @return r
      */
@@ -75,5 +75,31 @@ public class EmployeeController {
     public R<Page<Employee>> page(Integer page, Integer pageSize, String name) {
         Page<Employee> pageResult = employeeService.findByPage(page, pageSize, name);
         return R.success(pageResult);
+    }
+
+    /**
+     * 作用： 更新员工信息
+     * @param employee  封装所有提交过来的员工信息
+     * @param session   会话域对象
+     * @return 修改成功
+     */
+    @PutMapping
+    public R<String> update(@RequestBody  Employee employee,HttpSession session){
+        //1. 获取当前登陆用户，修改更新者信息
+        Employee loginEmployee = (Employee) session.getAttribute("employee");
+        employee.setUpdateUser(loginEmployee.getId());
+        //2. 把信息交给service
+        employeeService.update(employee);
+        return R.success("修改成功");
+    }
+
+    /**
+     *根据id查找员工
+     * @return
+     */
+    @GetMapping("/{id}")
+    public R<Employee> findById(@PathVariable Long id){
+        R<Employee> result = employeeService.findById(id);
+        return result;
     }
 }

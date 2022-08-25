@@ -1,11 +1,13 @@
 package com.qingAn.reggie.entity;
 
 import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * 员工
+ *
  * @author qingAn
  */
 @Data
@@ -13,7 +15,10 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * 用户id
+     *
+     * @JsonFormat 用来表示json序列化的一种格式或者类型，shape表示序列化后的一种类型
      */
+    // @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
     /**
      * 登录的时候使用用户名

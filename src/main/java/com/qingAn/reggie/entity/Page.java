@@ -8,12 +8,13 @@ import java.util.List;
 
 /**
  * 页面
+ *
  * @author qingAn
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Page<T>  {
+public class Page<T> {
     /**
      * 当前页数据列表
      */

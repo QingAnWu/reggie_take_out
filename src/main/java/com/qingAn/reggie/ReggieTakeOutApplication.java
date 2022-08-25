@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
- * http://localhost:8080/backend/page/login/login.html
+ * http://localhost:80/backend/page/login/login.html
  * @author qingAn
  */
 @Slf4j

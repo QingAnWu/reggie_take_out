@@ -70,8 +70,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageInfo<Employee> pageInfo = new PageInfo(employeeList);
 
         //4. 把pageinfo的信息转移到Page对象
-        Page<Employee> pageResult = new Page<>(pageInfo.getList(), pageInfo.getTotal(), pageInfo.getPageSize(), pageInfo.getPageNum());
+        Page<Employee> pageResult = new Page<>(
+                pageInfo.getList(),
+                pageInfo.getTotal(),
+                pageInfo.getPageSize(),
+                pageInfo.getPageNum());
 
         return pageResult;
+    }
+
+    @Override
+    public void update(Employee employee) {
+        employee.setUpdateTime(LocalDateTime.now());
+        employeeMapper.update(employee);
+    }
+
+    @Override
+    public R<Employee> findById(Long id) {
+        Employee employee = employeeMapper.findById(id);
+        return R.success(employee);
     }
 }

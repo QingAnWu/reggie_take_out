@@ -9,10 +9,8 @@ import org.springframework.util.AntPathMatcher;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * @author qingAn
@@ -68,8 +66,6 @@ public class LoginCheckFilter implements Filter {
             //登录成功 放行
             filterChain.doFilter(request, response);
         }
-
-
     }
 
     @Override
