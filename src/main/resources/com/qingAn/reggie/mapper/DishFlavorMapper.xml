@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingAn.reggie.mapper.DishFlavorMapper">
+
+    <insert id="saveBatch">
+        INSERT INTO dish_flavor VALUES
+        <foreach collection="dishFlavorList" item="dishFlavor" separator=",">
+            (NULL,#{dishFlavor.dishId},#{dishFlavor.name},#{dishFlavor.value},#{dishFlavor.createTime},#{dishFlavor.updateTime},#{dishFlavor.createUser},#{dishFlavor.updateUser},0)
+        </foreach>
+    </insert>
+
+</mapper>

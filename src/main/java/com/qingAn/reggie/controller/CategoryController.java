@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author qingAn
@@ -39,33 +40,36 @@ public class CategoryController {
 
     /**
      * 作用： 类别分页管理
-     * @param page   当前页
-     * @param pageSize  页面大小
+     *
+     * @param page     当前页
+     * @param pageSize 页面大小
      * @return
      */
     @GetMapping("/page")
-    public R<Page<Category>> findByPage(Integer page , Integer pageSize){
+    public R<Page<Category>> findByPage(Integer page, Integer pageSize) {
         Page<Category> byPage = categoryService.findByPage(page, pageSize);
         return R.success(byPage);
     }
 
     /**
      * 根据id删除分类
+     *
      * @param id
      * @return
      */
     @DeleteMapping("/{id}")
-    public R<String> delete(@PathVariable Long id){
+    public R<String> delete(@PathVariable Long id) {
         return categoryService.deleteById(id);
     }
 
     /**
      * 作用：修改类别
+     *
      * @param category
      * @return
      */
     @PutMapping
-    public R<String> update(@RequestBody  Category category,HttpSession session) {
+    public R<String> update(@RequestBody Category category, HttpSession session) {
         //1. 获取当前登陆者
         Employee employee = (Employee) session.getAttribute("employee");
         //2. 修改修改者的信息
@@ -73,6 +77,18 @@ public class CategoryController {
         categoryService.updateById(category);
 
         return R.success("修改成功");
+    }
+
+    /**
+     * 作用：根据Type查询类别集合
+     *
+     * @param type 类别的type
+     * @return
+     */
+    @GetMapping("list")
+    public R<List<Category>> list(Integer type) {
+        List<Category> categoryList = categoryService.findAllByType(type);
+        return R.success(categoryList);
     }
 
 }

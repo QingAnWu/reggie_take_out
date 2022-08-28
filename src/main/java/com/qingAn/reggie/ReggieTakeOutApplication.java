@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * http://localhost:80/backend/page/login/login.html
@@ -13,8 +14,9 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @Slf4j
 //扫描web原生注解，例如：@WebServlet,@WebFilter,@WebListener
 @ServletComponentScan
-@MapperScan("com.qingAn.reggie.mapper")
 @SpringBootApplication
+@MapperScan("com.qingAn.reggie.mapper")
+@EnableTransactionManagement //开启对事物管理的支持
 public class ReggieTakeOutApplication {
 
     public static void main(String[] args) {

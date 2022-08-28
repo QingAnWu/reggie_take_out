@@ -49,6 +49,21 @@ public interface CategoryMapper {
     @Delete("delete from category where id = #{id}")
     void deleteById(Long id);
 
+    /**
+     * 修改类别
+     *
+     * @param category
+     */
     @Update("update category set type=#{type},name=#{name},sort=#{sort},update_time=#{updateTime},update_user=#{updateUser} where id=#{id}")
     void updateById(Category category);
+
+    /**
+     * 根据name查询对应类别的数量，排除当前自己的类别
+     * @param category
+     * @return
+     */
+    @Select("select count(*) from category where name=#{name} and id != #{id}")
+    Integer selectByNameCount(Category category);
+
+    List<Category> findAllByType(Integer type);
 }

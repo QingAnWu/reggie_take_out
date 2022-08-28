@@ -2,11 +2,13 @@ package com.qingAn.reggie;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qingAn.reggie.controller.CommonController;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.mapper.EmployeeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -31,6 +33,16 @@ class ReggieTakeOutApplicationTests {
         System.out.println("总页数："+ pageInfo.getPages());
         System.out.println("当前页："+ pageInfo.getPageNum());
         System.out.println("页面大小："+ pageInfo.getPageSize());
+    }
+
+    @Value("${takeout.path}")
+    private String baseDir;
+
+    @Test
+    void Test01(){
+        System.out.println(CommonController.class.getResource("/"));
+        String path = CommonController.class.getResource("/").getPath();
+        System.out.println(path+baseDir);
     }
 
 }

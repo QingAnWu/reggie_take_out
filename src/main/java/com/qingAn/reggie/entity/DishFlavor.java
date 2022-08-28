@@ -1,41 +1,34 @@
 package com.qingAn.reggie.entity;
 
+
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 分类
- * @author qingAn
+ * 菜品口味
  */
 @Data
-@Validated
-public class Category implements Serializable {
+public class DishFlavor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 类别id
-     */
-
     private Long id;
-
     /**
-     * 类型 1 菜品分类 2 套餐分类
+     * 菜品id
      */
-    private Integer type;
+    private Long dishId;
 
     /**
-     * 分类名称
+     * 口味名称
      */
     private String name;
 
     /**
-     * 顺序
+     * 口味数据list
      */
-    private Integer sort;
+    private String value;
 
     /**
      * 创建时间
@@ -56,4 +49,9 @@ public class Category implements Serializable {
      * 修改人
      */
     private Long updateUser;
+
+    /**
+     * 是否删除
+     */
+    private Integer isDeleted;
 }

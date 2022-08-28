@@ -28,3 +28,7 @@ mybatis:
 pagehelper:
   auto-dialect: true
   reasonable: true
+
+#设置存储上传的位置
+takeout:
+  path: upload/

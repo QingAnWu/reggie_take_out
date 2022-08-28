@@ -104,4 +104,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.updateById(category);
     }
 
+    @Override
+    public List<Category> findAllByType(Integer type) {
+        return categoryMapper.findAllByType(type);
+    }
+
+
 }

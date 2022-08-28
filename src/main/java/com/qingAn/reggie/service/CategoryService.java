@@ -4,6 +4,8 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Category;
 import com.qingAn.reggie.entity.Page;
 
+import java.util.List;
+
 /**
  * @author qingAn
  * @date 2022/08/25 9:32
@@ -49,4 +51,11 @@ public interface CategoryService {
      * @return
      */
     void updateById(Category category);
+
+    /**
+     * 根据type查询类别列表数据
+     * @param type
+     * @return List 返回列表集合
+     */
+    List<Category> findAllByType(Integer type);
 }
