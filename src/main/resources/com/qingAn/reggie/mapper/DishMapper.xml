@@ -3,5 +3,51 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qingAn.reggie.mapper.DishMapper">
+    <update id="updateById">
+        update dish
+        <set>
+            <if test="name!=null and name!=''">
+                name = #{name},
+            </if>
+            <if test="categoryId!=null">
+                category_id = #{categoryId},
+            </if>
+            <if test="price!=null">
+                price = #{price},
+            </if>
+            <if test="code!=null and code!=''">
+                code = #{code},
+            </if>
+            <if test="image!=null and image!=''">
+                image = #{image},
+            </if>
+            <if test="description!=null and description!=''">
+                description = #{description},
+            </if>
+            <if test="sort!=null">
+                sort = #{sort},
+            </if>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser!=null">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 
+    <select id="findByPage" resultType="com.qingAn.reggie.entity.DishDto">
+        select d.* ,c.name category_name
+        from dish d
+        inner join category c on d.category_id = c.id
+        <where>
+            <if test="name!=null and name!=''">
+                d.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

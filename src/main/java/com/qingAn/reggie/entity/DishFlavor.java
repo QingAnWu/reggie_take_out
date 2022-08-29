@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 /**
  * 菜品口味
+ *
+ * @author qingAn
  */
 @Data
 public class DishFlavor implements Serializable {

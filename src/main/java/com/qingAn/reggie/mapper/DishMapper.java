@@ -1,10 +1,13 @@
 package com.qingAn.reggie.mapper;
 
+import com.qingAn.reggie.entity.Dish;
 import com.qingAn.reggie.entity.DishDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author qingAn
@@ -33,4 +36,22 @@ public interface DishMapper {
     @Insert("insert into  dish values(null,#{name},#{categoryId},#{price},#{code},#{image},#{description},#{status},#{sort},#{createTime},#{updateTime},#{createUser},#{updateUser},0)")
     @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
     void save(DishDto dishDto);
+
+    /**
+     * 分页查询
+     * @param name
+     * @return
+     */
+    List<DishDto> findByPage(String name);
+
+    /**
+     * 通过id查找
+     * @param id
+     * @return
+     */
+    @Select("select * from dish where id=#{id}")
+    Dish findById(Long id);
+
+    //根据id修改菜品
+    void updateById(DishDto dishDto);
 }
