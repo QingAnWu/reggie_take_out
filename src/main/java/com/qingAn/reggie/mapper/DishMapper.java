@@ -4,6 +4,7 @@ import com.qingAn.reggie.entity.Dish;
 import com.qingAn.reggie.entity.DishDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +53,34 @@ public interface DishMapper {
     @Select("select * from dish where id=#{id}")
     Dish findById(Long id);
 
-    //根据id修改菜品
+    /**
+     * 根据id修改菜品
+     * @param dishDto
+     */
     void updateById(DishDto dishDto);
+
+    /**
+     * 根据id关闭售卖状态
+     * @param ids
+     */
+    void updateStatus0(@Param("ids") List ids ,@Param("dish") Dish dish);
+
+    /**
+     * 根据id开启售卖状态
+     * @param ids
+     */
+    void updateStatus1(@Param("ids") List ids ,@Param("dish") Dish dish);
+
+    /**
+     * 根据批量删除菜品
+     * @param ids
+     */
+    void deleteDish(@Param("ids") List ids);
+
+    /**
+     * 方法作用： 根据菜品类别的id查找的菜品
+     * @param categoryId
+     */
+    @Select("select * from dish where category_id=#{categoryId} and status=1 ")
+    List<Dish> findByCategoryId(Long categoryId);
 }

@@ -151,4 +151,44 @@ public class DishServiceImpl implements DishService {
         dishFlavorMapper.saveBatch(dishFlavorList);
 
     }
+
+    /**
+     * 根据id关闭售卖状态
+     * @param ids
+     */
+    @Override
+    public void updateStatus0(List ids ,Dish dish) {
+        dish.setUpdateTime(LocalDateTime.now());
+        dishMapper.updateStatus0(ids,dish);
+    }
+
+    /**
+     * 根据id开启售卖状态
+     * @param ids
+     */
+    @Override
+    public void updateStatus1(List ids ,Dish dish) {
+        dish.setUpdateTime(LocalDateTime.now());
+        dishMapper.updateStatus1(ids,dish);
+    }
+
+    /**
+     * 根据批量删除菜品
+     * @param ids
+     */
+    @Override
+    public void deleteDish(List ids) {
+        dishMapper.deleteDish(ids);
+    }
+
+    /**
+     * 方法作用： 根据菜品类别的id查找的菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> findByCategoryId(Long categoryId) {
+        List<Dish> dishList = dishMapper.findByCategoryId(categoryId);
+        return dishList;
+    }
 }

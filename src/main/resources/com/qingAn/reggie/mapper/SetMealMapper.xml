@@ -3,5 +3,44 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qingAn.reggie.mapper.SetMealMapper">
+    <update id="deleteByIds">
+        update setmeal set is_deleted=1 ,update_time=#{updateTime} ,update_user =#{opr}
+        where status =0 and id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+    <update id="updateStatus0">
+        update setmeal set status=0,update_time=#{updateTime} ,update_user =#{opr}
+        <where>
+            <foreach collection="ids" item="id" open="id in (" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="updateStatus1">
+        update setmeal set status=1,update_time=#{updateTime} ,update_user =#{opr}
+        <where>
+            <foreach collection="ids" item="id" open="id in (" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+
+    <select id="findByName" resultType="com.qingAn.reggie.entity.Setmeal">
+        select * from setmeal where is_deleted = 0
+        <if test="name!=null and name!=''">
+            name like concat('%',#{name},'%')
+        </if>
+    </select>
+
+    <!--//根据套餐的id，查询状态为1的总数.-->
+    <select id="queryDishWithStatus" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM setmeal WHERE `status`= 1 AND id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
 
 </mapper>

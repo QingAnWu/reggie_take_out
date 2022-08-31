@@ -59,6 +59,7 @@ public interface CategoryMapper {
 
     /**
      * 根据name查询对应类别的数量，排除当前自己的类别
+     *
      * @param category
      * @return
      */
@@ -66,4 +67,7 @@ public interface CategoryMapper {
     Integer selectByNameCount(Category category);
 
     List<Category> findAllByType(Integer type);
+
+    @Select("select * from category where id=#{id}")
+    Category findById(Long id);
 }

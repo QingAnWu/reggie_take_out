@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author qingAn
@@ -68,6 +71,55 @@ public class DishController {
         dishDto.setUpdateUser(employee.getId());
         dishService.updateWithFlavor(dishDto);
         return R.success("修改菜品成功");
+    }
+
+    /**
+     * 根据id关闭售卖状态
+     * @param ids
+     */
+    @PostMapping("/status/0")
+    public R<String> updateStatus0(String ids , HttpSession session){
+        String[] list = ids.split(",");
+        List<String> upList = new ArrayList<>(Arrays.asList(list));
+        Employee employee = (Employee) session.getAttribute("employee");
+        Dish dish = new Dish();
+        dish.setUpdateUser(employee.getId());
+        dishService.updateStatus0(upList,dish);
+        return R.success("关闭售卖");
+    }
+
+    /**
+     * 根据id开启售卖状态
+     * @param ids
+     */
+    @PostMapping("/status/1")
+    public R<String> updateStatus1(String ids , HttpSession session){
+        String[] list = ids.split(",");
+        List<String> upList = new ArrayList<>(Arrays.asList(list));
+        Employee employee = (Employee) session.getAttribute("employee");
+        Dish dish = new Dish();
+        dish.setUpdateUser(employee.getId());
+        dishService.updateStatus1(upList,dish);
+        return R.success("启动售卖");
+    }
+
+    @DeleteMapping
+    public R<String> deleteDish(String ids){
+        String[] idList = ids.split(",");
+        ArrayList<String> listId = new ArrayList<>(Arrays.asList(idList));
+        dishService.deleteDish(listId);
+        return R.success("成功删除");
+    }
+
+    /**
+     * 方法作用： 根据菜品类别的id查找的菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> list(Long categoryId) {
+        List<Dish> dishList = dishService.findByCategoryId(categoryId);
+        return R.success(dishList);
     }
 
 }

@@ -40,6 +40,33 @@
         where id=#{id}
     </update>
 
+    <update id="updateStatus0">
+        update dish set status=0 , update_time = #{dish.updateTime} ,update_user = #{dish.updateUser}
+        <where>
+            <foreach collection="ids" item="id" open="id in (" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="updateStatus1">
+        update dish set status=1 , update_time = #{dish.updateTime} ,update_user = #{dish.updateUser}
+        <where>
+            <foreach collection="ids" item="id" open="id in (" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+
+    <delete id="deleteDish">
+        delete from dish
+        <where>
+            <foreach collection="ids" item="id" open="id in (" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
     <select id="findByPage" resultType="com.qingAn.reggie.entity.DishDto">
         select d.* ,c.name category_name
         from dish d
