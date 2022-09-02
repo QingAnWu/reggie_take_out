@@ -33,21 +33,18 @@ public class SetmealServiceImpl implements SetmealService {
 
     /**
      * 作用：新增套餐
-     *
-     * @param setmealDto
-     * @return
      */
     @Override
     @Transactional
     public void save(SetmealDto setmealDto) {
-        //1. 补全setmeal的信息，比如:、修改、创建时间、
+        //补全setmeal的信息，比如:、修改、创建时间、
         setmealDto.setCreateTime(LocalDateTime.now());
         setmealDto.setUpdateTime(LocalDateTime.now());
-        //2. 调用保存的方法 把套餐的id设置给实体类
+        //调用保存的方法 把套餐的id设置给实体类
         setMealMapper.save(setmealDto);
 
 
-        //3.得到套餐的菜品，给所有的菜品补全信息(setmeal_id 、修改、创建时间、排序，)
+        //得到套餐的菜品，给所有的菜品补全信息(setmeal_id 、修改、创建时间、排序，)
         List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
         setmealDishes = setmealDishes.stream().map(setmealDish -> {
             setmealDish.setSetmealId(setmealDto.getId());
@@ -59,7 +56,7 @@ public class SetmealServiceImpl implements SetmealService {
             return setmealDish;
         }).collect(Collectors.toList());
 
-        //4. 批量插入套餐菜品表
+        //批量插入套餐菜品表
         setmealDishMapper.saveBatch(setmealDishes);
 
     }
@@ -121,14 +118,7 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
-    public void updateStatus0(List<Long> ids, Long opr) {
-
-        setMealMapper.updateStatus0(ids, opr, LocalDateTime.now());
-    }
-
-    @Override
-    public void updateStatus1(List<Long> ids, Long opr) {
-
-        setMealMapper.updateStatus1(ids, opr, LocalDateTime.now());
+    public void updateStatus(List<Long> ids, Integer status, Long opr) {
+        setMealMapper.updateStatus(ids, status, opr, LocalDateTime.now());
     }
 }

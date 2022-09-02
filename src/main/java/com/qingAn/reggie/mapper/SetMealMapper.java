@@ -39,6 +39,7 @@ public interface SetMealMapper {
 
     /**
      * 根据套餐的id，查询状态为1的总数.
+     *
      * @param ids
      * @return
      */
@@ -46,11 +47,10 @@ public interface SetMealMapper {
 
     /**
      * 根据套餐的id删除套餐
+     *
      * @param ids
      */
-    void deleteByIds(@Param("ids") List<Long> ids , @Param("opr") Long opr,@Param("updateTime") LocalDateTime updateTime);
+    void deleteByIds(@Param("ids") List<Long> ids, @Param("opr") Long opr, @Param("updateTime") LocalDateTime updateTime);
 
-    void updateStatus0(@Param("ids") List<Long> ids, @Param("opr") Long opr,@Param("updateTime") LocalDateTime updateTime);
-
-    void updateStatus1(@Param("ids") List<Long> ids, @Param("opr") Long opr,@Param("updateTime") LocalDateTime updateTime);
+    void updateStatus(@Param("ids") List<Long> ids, @Param("status") Integer status, @Param("opr") Long opr, @Param("updateTime") LocalDateTime updateTime);
 }

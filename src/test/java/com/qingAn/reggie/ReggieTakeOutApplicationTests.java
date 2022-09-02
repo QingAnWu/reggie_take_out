@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.List;
 
@@ -20,8 +22,11 @@ class ReggieTakeOutApplicationTests {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    @Autowired(required = false)
+    private JavaMailSenderImpl mailSender;
+
     @Test
-    void contextLoads() {
+    void TestcontextLoads() {
         //1. 设置当前页与页面大小 注意这两行代码一定要紧挨着
         PageHelper.startPage(1,2);
         //2. 查找数据
@@ -43,6 +48,17 @@ class ReggieTakeOutApplicationTests {
         System.out.println(CommonController.class.getResource("/"));
         String path = CommonController.class.getResource("/").getPath();
         System.out.println(path+baseDir);
+    }
+
+    @Test
+    public void contextLoads() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setSubject("ikun");
+        message.setText("练习两年半的实习生，鸡你太美");
+        message.setTo("ytmfssquvjjj@163.com");
+        // message.setTo("571206595@qq.com");
+        message.setFrom("wuqingan3306@163.com");
+        mailSender.send(message);
     }
 
 }

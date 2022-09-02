@@ -84,7 +84,7 @@ public class EmployeeController {
      * @return 修改成功
      */
     @PutMapping
-    public R<String> update(@RequestBody  Employee employee,HttpSession session){
+    public R<String> update(@RequestBody  Employee employee, HttpSession session ){
         //1. 获取当前登陆用户，修改更新者信息
         Employee loginEmployee = (Employee) session.getAttribute("employee");
         employee.setUpdateUser(loginEmployee.getId());
@@ -99,7 +99,6 @@ public class EmployeeController {
      */
     @GetMapping("/{id}")
     public R<Employee> findById(@PathVariable Long id){
-        R<Employee> result = employeeService.findById(id);
-        return result;
+        return employeeService.findById(id);
     }
 }

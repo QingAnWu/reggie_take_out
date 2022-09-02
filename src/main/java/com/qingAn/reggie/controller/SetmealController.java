@@ -65,17 +65,10 @@ public class SetmealController {
         return R.success("删除成功");
     }
 
-    @PostMapping("/status/0")
-    public R<String> updateStatus0(@RequestParam List<Long> ids ,HttpSession session){
+    @PostMapping("/status/{status}")
+    public R<String> updateStatus(@RequestParam List<Long> ids ,@PathVariable Integer status, HttpSession session){
         Employee employee =(Employee) session.getAttribute("employee");
-        setmealService.updateStatus0(ids, employee.getId());
-        return R.success("停售成功");
-    }
-
-    @PostMapping("/status/1")
-    public R<String> updateStatus1(@RequestParam List<Long> ids ,HttpSession session){
-        Employee employee =(Employee) session.getAttribute("employee");
-        setmealService.updateStatus1(ids, employee.getId());
-        return R.success("启售成功");
+        setmealService.updateStatus(ids,status, employee.getId());
+        return R.success("修改成功");
     }
 }

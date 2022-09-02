@@ -10,17 +10,8 @@
             #{id}
         </foreach>
     </update>
-    <update id="updateStatus0">
-        update setmeal set status=0,update_time=#{updateTime} ,update_user =#{opr}
-        <where>
-            <foreach collection="ids" item="id" open="id in (" separator="," close=")">
-                #{id}
-            </foreach>
-        </where>
-    </update>
-
-    <update id="updateStatus1">
-        update setmeal set status=1,update_time=#{updateTime} ,update_user =#{opr}
+    <update id="updateStatus">
+        update setmeal set status=#{status},update_time=#{updateTime} ,update_user =#{opr}
         <where>
             <foreach collection="ids" item="id" open="id in (" separator="," close=")">
                 #{id}

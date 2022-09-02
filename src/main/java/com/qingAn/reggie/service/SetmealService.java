@@ -32,14 +32,8 @@ public interface SetmealService {
     void deleteByIds(List<Long> ids, Long opr);
 
     /**
-     * 通过id批量停售
+     * 通过id批量启售停售
      * @param ids
      */
-    void updateStatus0(List<Long> ids, Long opr);
-
-    /**
-     * 通过id批量启售
-     * @param ids
-     */
-    void updateStatus1(List<Long> ids, Long opr);
+    void updateStatus(List<Long> ids ,Integer status, Long opr);
 }
