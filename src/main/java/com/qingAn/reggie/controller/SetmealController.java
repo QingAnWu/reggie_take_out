@@ -4,6 +4,7 @@ package com.qingAn.reggie.controller;
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
+import com.qingAn.reggie.entity.Setmeal;
 import com.qingAn.reggie.entity.SetmealDto;
 import com.qingAn.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
@@ -60,15 +61,27 @@ public class SetmealController {
      */
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids, HttpSession session) {
-        Employee employee =(Employee) session.getAttribute("employee");
+        Employee employee = (Employee) session.getAttribute("employee");
         setmealService.deleteByIds(ids, employee.getId());
         return R.success("删除成功");
     }
 
     @PostMapping("/status/{status}")
-    public R<String> updateStatus(@RequestParam List<Long> ids ,@PathVariable Integer status, HttpSession session){
-        Employee employee =(Employee) session.getAttribute("employee");
-        setmealService.updateStatus(ids,status, employee.getId());
+    public R<String> updateStatus(@RequestParam List<Long> ids, @PathVariable Integer status, HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        setmealService.updateStatus(ids, status, employee.getId());
         return R.success("修改成功");
     }
+
+    /**
+     * 根据套餐的类别展示套餐
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    @GetMapping("list")
+    public R<List<Setmeal>> list(Long categoryId, Integer status) {
+        return R.success(setmealService.findByCategoryId(categoryId,status));
+    }
+
 }

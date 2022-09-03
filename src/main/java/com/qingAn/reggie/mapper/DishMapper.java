@@ -32,14 +32,16 @@ public interface DishMapper {
     /**
      * 作用：插入菜品，而且需要把主键设置会给实体类
      * Options 通知mybatis插入数据之后，把id列的值设置给实体类的id属性
+     *
      * @param dishDto
      */
     @Insert("insert into  dish values(null,#{name},#{categoryId},#{price},#{code},#{image},#{description},#{status},#{sort},#{createTime},#{updateTime},#{createUser},#{updateUser},0)")
-    @Options(useGeneratedKeys = true,keyColumn = "id",keyProperty = "id")
+    @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void save(DishDto dishDto);
 
     /**
      * 分页查询
+     *
      * @param name
      * @return
      */
@@ -47,6 +49,7 @@ public interface DishMapper {
 
     /**
      * 通过id查找
+     *
      * @param id
      * @return
      */
@@ -55,32 +58,37 @@ public interface DishMapper {
 
     /**
      * 根据id修改菜品
+     *
      * @param dishDto
      */
     void updateById(DishDto dishDto);
 
     /**
      * 根据id关闭售卖状态
+     *
      * @param ids
      */
-    void updateStatus0(@Param("ids") List ids ,@Param("dish") Dish dish);
+    void updateStatus0(@Param("ids") List ids, @Param("dish") Dish dish);
 
     /**
      * 根据id开启售卖状态
+     *
      * @param ids
      */
-    void updateStatus1(@Param("ids") List ids ,@Param("dish") Dish dish);
+    void updateStatus1(@Param("ids") List ids, @Param("dish") Dish dish);
 
     /**
      * 根据批量删除菜品
+     *
      * @param ids
      */
     void deleteDish(@Param("ids") List ids);
 
     /**
      * 方法作用： 根据菜品类别的id查找的菜品
+     *
      * @param categoryId
      */
-    @Select("select * from dish where category_id=#{categoryId} and status=1 ")
-    List<Dish> findByCategoryId(Long categoryId);
+    @Select("select * from dish where category_id=#{categoryId} and status=#{status} ")
+    List<Dish> findByCategoryId(@Param("categoryId") Long categoryId, @Param("status") Integer status);
 }

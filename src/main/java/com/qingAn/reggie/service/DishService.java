@@ -53,5 +53,5 @@ public interface DishService {
     /**
      * 方法作用： 根据菜品类别的id查找的菜品
      */
-    List<Dish> findByCategoryId(Long categoryId);
+    List<DishDto> findByCategoryId(Long categoryId,Integer status);
 }

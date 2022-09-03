@@ -35,7 +35,7 @@ public class SetmealServiceImpl implements SetmealService {
      * 作用：新增套餐
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void save(SetmealDto setmealDto) {
         //补全setmeal的信息，比如:、修改、创建时间、
         setmealDto.setCreateTime(LocalDateTime.now());
@@ -120,5 +120,16 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public void updateStatus(List<Long> ids, Integer status, Long opr) {
         setMealMapper.updateStatus(ids, status, opr, LocalDateTime.now());
+    }
+
+    /**
+     * 根据套餐的类别展示套餐
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    @Override
+    public List<Setmeal> findByCategoryId(Long categoryId, Integer status) {
+        return setMealMapper.findByCategoryId(categoryId,status);
     }
 }

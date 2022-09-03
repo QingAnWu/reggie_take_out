@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingAn.reggie.mapper.OrderDetailMapper">
+
+    <insert id="saveBatch">
+        insert into order_detail values
+        <foreach collection="orderDetailList" item="orderDetail" separator=",">
+            (#{orderDetail.id},#{orderDetail.name},#{orderDetail.image},
+             #{orderDetail.orderId},#{orderDetail.dishId},#{orderDetail.setmealId},
+             #{orderDetail.dishFlavor},#{orderDetail.number},#{orderDetail.amount})
+        </foreach>
+    </insert>
+</mapper>

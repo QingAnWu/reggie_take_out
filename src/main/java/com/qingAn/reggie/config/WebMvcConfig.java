@@ -13,8 +13,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-    /*
-        配置静态资源处理
+    /**
+     * 配置静态资源处理
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {

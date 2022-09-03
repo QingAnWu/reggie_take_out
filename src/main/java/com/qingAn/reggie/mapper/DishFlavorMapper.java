@@ -28,7 +28,7 @@ public interface DishFlavorMapper {
      * @param dishFlavors
      * @return
      */
-    @Select("select * from dish_flavor where dish_id=#{dishId}")
+    @Select("select * from dish_flavor where dish_id=#{dishId} and is_deleted=0")
     List<DishFlavor> findByDishId(Long id);
 
     /**

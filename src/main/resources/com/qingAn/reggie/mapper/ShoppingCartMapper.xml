@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingAn.reggie.mapper.ShoppingCartMapper">
+
+    <insert id="addShoppingCart">
+        insert into shopping_cart
+        values (null, #{name}, #{image}, #{userId},
+                #{dishId}, #{setmealId}, #{dishFlavor},
+                #{number}, #{amount}, #{createTime})
+    </insert>
+    <select id="findUidAndDidOrSid" resultType="com.qingAn.reggie.entity.ShoppingCart">
+        select *  from shopping_cart where user_id=#{userId} and
+        <if test="dishId!=null">
+            dish_id =#{dishId}
+        </if>
+        <if test="setmealId!=null">
+            setmeal_id =#{setmealId}
+        </if>
+
+    </select>
+</mapper>

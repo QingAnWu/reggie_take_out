@@ -1,6 +1,7 @@
 package com.qingAn.reggie.service;
 
 import com.qingAn.reggie.entity.Page;
+import com.qingAn.reggie.entity.Setmeal;
 import com.qingAn.reggie.entity.SetmealDto;
 
 import java.util.List;
@@ -36,4 +37,6 @@ public interface SetmealService {
      * @param ids
      */
     void updateStatus(List<Long> ids ,Integer status, Long opr);
+
+    List<Setmeal> findByCategoryId(Long categoryId, Integer status);
 }

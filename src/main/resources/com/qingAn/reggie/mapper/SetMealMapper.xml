@@ -22,7 +22,7 @@
     <select id="findByName" resultType="com.qingAn.reggie.entity.Setmeal">
         select * from setmeal where is_deleted = 0
         <if test="name!=null and name!=''">
-            name like concat('%',#{name},'%')
+            and name like concat('%',#{name},'%')
         </if>
     </select>
 
@@ -32,6 +32,16 @@
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
+    </select>
+
+    <select id="findByCategoryId" resultType="com.qingAn.reggie.entity.Setmeal">
+        select * from setmeal where is_deleted = 0
+        <if test="categoryId!=null">
+            and category_id =#{categoryId}
+        </if>
+        <if test="status!=null">
+            and status =#{status}
+        </if>
     </select>
 
 </mapper>

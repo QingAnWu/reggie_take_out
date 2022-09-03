@@ -2,10 +2,7 @@ package com.qingAn.reggie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.qingAn.reggie.entity.Dish;
-import com.qingAn.reggie.entity.DishDto;
-import com.qingAn.reggie.entity.DishFlavor;
-import com.qingAn.reggie.entity.Page;
+import com.qingAn.reggie.entity.*;
 import com.qingAn.reggie.mapper.CategoryMapper;
 import com.qingAn.reggie.mapper.DishFlavorMapper;
 import com.qingAn.reggie.mapper.DishMapper;
@@ -187,8 +184,21 @@ public class DishServiceImpl implements DishService {
      * @return
      */
     @Override
-    public List<Dish> findByCategoryId(Long categoryId) {
-        List<Dish> dishList = dishMapper.findByCategoryId(categoryId);
-        return dishList;
+    public List<DishDto> findByCategoryId(Long categoryId,Integer status) {
+        List<Dish> dishList = dishMapper.findByCategoryId(categoryId,status);
+        //遍历所有的dish，把dish转换为dto
+        List<DishDto> dishDtoList = dishList.stream().map(dish -> {
+            DishDto dishDto = new DishDto();
+            //属性拷贝
+            BeanUtils.copyProperties(dish, dishDto);
+            //查看该菜品的口味信息
+            List<DishFlavor> dishFlavorList = dishFlavorMapper.findByDishId(dish.getId());
+            dishDto.setFlavors(dishFlavorList);
+            //类别信息
+            Category category = categoryMapper.findById(dish.getCategoryId());
+            dishDto.setCategoryName(category.getName());
+            return dishDto;
+        }).collect(Collectors.toList());
+        return dishDtoList;
     }
 }

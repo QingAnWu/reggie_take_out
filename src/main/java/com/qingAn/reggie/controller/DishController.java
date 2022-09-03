@@ -117,8 +117,8 @@ public class DishController {
      * @return
      */
     @GetMapping("/list")
-    public R<List<Dish>> list(Long categoryId) {
-        List<Dish> dishList = dishService.findByCategoryId(categoryId);
+    public R<List<DishDto>> list(Long categoryId,@RequestParam(defaultValue = "1") Integer status) {
+        List<DishDto> dishList = dishService.findByCategoryId(categoryId,status);
         return R.success(dishList);
     }
 

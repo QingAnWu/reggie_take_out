@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qingAn.reggie.mapper.AddressBookMapper">
+
+
+    <update id="updateDeleteAddressBook">
+        update address_book
+        <set>
+            <if test="isDeleted !=null">
+                is_deleted =#{isDeleted},
+            </if>
+            <if test="consignee !=null and consignee !='' ">
+                consignee =#{consignee},
+            </if>
+            <if test="sex !=null and sex !='' ">
+                sex =#{sex},
+            </if>
+            <if test="phone !=null and phone !='' ">
+                phone =#{phone},
+            </if>
+            <if test="detail !=null and detail !='' ">
+                detail =#{detail},
+            </if>
+            <if test="label !=null and label !='' ">
+                label =#{label},
+            </if>
+            <if test="updateUser !=null">
+                update_user =#{updateUser},
+            </if>
+            <if test="label !=null">
+                update_time =#{updateTime},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+</mapper>

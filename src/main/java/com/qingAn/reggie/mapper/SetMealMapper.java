@@ -38,6 +38,14 @@ public interface SetMealMapper {
     List<Setmeal> findByName(@Param("name") String name);
 
     /**
+     * 根据套餐的类别展示套餐
+     * @param categoryId
+     * @param status
+     * @return
+     */
+    List<Setmeal> findByCategoryId(@Param("categoryId") Long categoryId,@Param("status") Integer status);
+
+    /**
      * 根据套餐的id，查询状态为1的总数.
      *
      * @param ids
