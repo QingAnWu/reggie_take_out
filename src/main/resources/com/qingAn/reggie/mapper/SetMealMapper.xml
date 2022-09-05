@@ -28,7 +28,7 @@
 
     <!--//根据套餐的id，查询状态为1的总数.-->
     <select id="queryDishWithStatus" resultType="java.lang.Long">
-        SELECT COUNT(*) FROM setmeal WHERE `status`= 1 AND id in
+        SELECT COUNT(0) FROM setmeal WHERE `status`= 1 AND id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>

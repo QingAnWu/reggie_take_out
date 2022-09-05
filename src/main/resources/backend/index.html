@@ -25,7 +25,7 @@
     </style>
   </head>
 
-  <body>
+  <body >
     <div class="app" id="app">
       <div class="app-wrapper openSidebar clearfix">
         <!-- sidebar -->
@@ -74,8 +74,7 @@
           <div class="navbar">
             <div class="head-lable">
               <span v-if="goBackFlag" class="goBack" @click="goBack()"
-                ><img src="images/icons/btn_back@2x.png" alt="" /> 返回</span
-              >
+                ><img src="images/icons/btn_back@2x.png" alt="" /> 返回</span>
               <span>{{headTitle}}</span>
             </div>
             <div class="right-menu">
@@ -86,6 +85,7 @@
           </div>
           <div class="app-main" v-loading="loading">
             <div class="divTmp" v-show="loading"></div>
+
             <iframe
               id="cIframe"
               class="c_iframe"
@@ -96,10 +96,13 @@
               frameborder="0"
               v-show="!loading"
             ></iframe>
+
           </div>
         </div>
       </div>
     </div>
+
+
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
     <script src="plugins/vue/vue.js"></script>
     <!-- 引入组件库 -->
