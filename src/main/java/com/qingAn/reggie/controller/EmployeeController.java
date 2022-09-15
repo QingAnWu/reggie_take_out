@@ -4,6 +4,7 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.service.EmployeeService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
  * @date 2022/08/21 9:26
  */
 @RestController
+@ApiOperation("员工控制器")
 @RequestMapping("/employee")
 public class EmployeeController {
 

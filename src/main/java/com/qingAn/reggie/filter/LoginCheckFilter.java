@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,7 +19,7 @@ import java.io.IOException;
  */
 
 @Slf4j
-@WebFilter(urlPatterns = "/*")
+// @WebFilter(urlPatterns = "/*")
 public class LoginCheckFilter implements Filter {
 
     // 该类的作用主要用于匹配url地址
@@ -63,7 +62,7 @@ public class LoginCheckFilter implements Filter {
         // 判断登录状态，如果已登录，则直接放行
         User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
-            log.info("用户已登录，用户id为：{}", request.getSession().getAttribute("user"));
+            log.info("用户已登录，用户id为：{}", ((User) request.getSession().getAttribute("user")).getId());
             filterChain.doFilter(request, response);
             return;
         }
@@ -71,7 +70,7 @@ public class LoginCheckFilter implements Filter {
         // 判断员工登入状态
         Employee employee = (Employee) request.getSession().getAttribute("employee");
         if (employee != null) {
-            log.info("用户已登录，用户id为：{}", request.getSession().getAttribute("employee"));
+            log.info("用户已登录，用户id为：{}", ((Employee) request.getSession().getAttribute("employee")).getId());
             //登录成功 放行
             filterChain.doFilter(request, response);
             return;

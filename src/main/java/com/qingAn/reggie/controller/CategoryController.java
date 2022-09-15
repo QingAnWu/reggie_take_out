@@ -5,6 +5,7 @@ import com.qingAn.reggie.entity.Category;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.service.CategoryService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@ApiOperation("类别控制器")
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired

@@ -2,6 +2,7 @@ package com.qingAn.reggie.controller;
 
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.exception.SystemException;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ import java.util.UUID;
  */
 @Slf4j
 @RestController
+@ApiOperation("文件上传和下载")
 @RequestMapping("/common")
 public class CommonController {
 

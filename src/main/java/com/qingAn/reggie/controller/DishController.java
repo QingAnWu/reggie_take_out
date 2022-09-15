@@ -6,6 +6,7 @@ import com.qingAn.reggie.entity.DishDto;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.service.DishService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @date 2022/08/28 23:34
  */
 @RestController
+@ApiOperation("菜品控制器")
 @RequestMapping("/dish")
 public class DishController {
     @Autowired

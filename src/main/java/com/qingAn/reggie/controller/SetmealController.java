@@ -7,6 +7,7 @@ import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.entity.Setmeal;
 import com.qingAn.reggie.entity.SetmealDto;
 import com.qingAn.reggie.service.SetmealService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@RestController
-@RequestMapping("/setmeal")
 @Slf4j
+@RestController
+@ApiOperation("餐食控制器")
+@RequestMapping("/setmeal")
 public class SetmealController {
 
     @Autowired

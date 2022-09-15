@@ -5,6 +5,7 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.AddressBook;
 import com.qingAn.reggie.entity.User;
 import com.qingAn.reggie.service.AddressBookService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@ApiOperation("地址簿控制器")
 @RequestMapping("/addressBook")
 public class AddressBookController {
     @Autowired

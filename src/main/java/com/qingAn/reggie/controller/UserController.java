@@ -4,6 +4,7 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.User;
 import com.qingAn.reggie.service.UserService;
 import com.qingAn.reggie.utils.ValidateCodeUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,10 @@ import java.util.Map;
  * @author qingAn
  * @date 2022/09/02 20:55
  */
+@Slf4j
+@ApiOperation("用户控制器")
 @RequestMapping("/user")
 @RestController
-@Slf4j
 public class UserController {
 
     @Autowired
