@@ -4,6 +4,7 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Orders;
 import com.qingAn.reggie.entity.User;
 import com.qingAn.reggie.service.OrderService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
-@ApiOperation("订单控制器")
+@Api(value = "/order" ,tags = "订单控制器")
 @RequestMapping("/order")
 public class OrderController {
 
@@ -30,6 +31,7 @@ public class OrderController {
      * @param session
      * @return
      */
+    @ApiOperation("下单")
     @PostMapping("/submit")
     public R<String> submit(@RequestBody Orders orders, HttpSession session){
         //1.得到登陆者

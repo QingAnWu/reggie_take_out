@@ -7,6 +7,7 @@ import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.entity.Setmeal;
 import com.qingAn.reggie.entity.SetmealDto;
 import com.qingAn.reggie.service.SetmealService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@ApiOperation("餐食控制器")
+@Api(value = "/setmeal",tags = "餐食控制器")
 @RequestMapping("/setmeal")
 public class SetmealController {
 
@@ -30,6 +31,7 @@ public class SetmealController {
      * @param setmealDto
      * @return
      */
+    @ApiOperation("新增套餐")
     @PostMapping
     public R<String> save(@RequestBody SetmealDto setmealDto, HttpSession session) {
 
@@ -49,6 +51,7 @@ public class SetmealController {
      * @param name     菜品的名称
      * @return
      */
+    @ApiOperation("展示套餐列表")
     @GetMapping("/page")
     public R<Page<SetmealDto>> page(Integer page, Integer pageSize, String name) {
         Page<SetmealDto> pageResult = setmealService.findByPage(page, pageSize, name);
@@ -61,6 +64,7 @@ public class SetmealController {
      * @param ids 要删除套餐的id
      * @return
      */
+    @ApiOperation("批量删除")
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids, HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -68,6 +72,7 @@ public class SetmealController {
         return R.success("删除成功");
     }
 
+    @ApiOperation("通过id批量启售停售")
     @PostMapping("/status/{status}")
     public R<String> updateStatus(@RequestParam List<Long> ids, @PathVariable Integer status, HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -81,6 +86,7 @@ public class SetmealController {
      * @param status
      * @return
      */
+    @ApiOperation("根据套餐的类别展示套餐")
     @GetMapping("list")
     public R<List<Setmeal>> list(Long categoryId, Integer status) {
         return R.success(setmealService.findByCategoryId(categoryId,status));

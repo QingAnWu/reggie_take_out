@@ -5,6 +5,7 @@ import com.qingAn.reggie.entity.Category;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.service.CategoryService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@ApiOperation("类别控制器")
+@Api(value = "/category",tags = "类别分类")
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
@@ -32,6 +33,8 @@ public class CategoryController {
      * @param session
      * @return 添加类别成功
      */
+
+    @ApiOperation("添加类别")
     @PostMapping
     public R<String> saveCategory(@RequestBody Category category, HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -47,6 +50,7 @@ public class CategoryController {
      * @param pageSize 页面大小
      * @return
      */
+    @ApiOperation("类别分页管理")
     @GetMapping("/page")
     public R<Page<Category>> findByPage(Integer page, Integer pageSize) {
         Page<Category> byPage = categoryService.findByPage(page, pageSize);
@@ -59,6 +63,7 @@ public class CategoryController {
      * @param id
      * @return
      */
+    @ApiOperation("根据id删除分类")
     @DeleteMapping("/{id}")
     public R<String> delete(@PathVariable Long id) {
         return categoryService.deleteById(id);
@@ -70,6 +75,7 @@ public class CategoryController {
      * @param category
      * @return
      */
+    @ApiOperation("修改类别")
     @PutMapping
     public R<String> update(@RequestBody Category category, HttpSession session) {
         //1. 获取当前登陆者
@@ -87,6 +93,7 @@ public class CategoryController {
      * @param type 类别的type
      * @return
      */
+    @ApiOperation("根据Type查询类别集合")
     @GetMapping("list")
     public R<List<Category>> list(Integer type) {
         List<Category> categoryList = categoryService.findAllByType(type);

@@ -33,7 +33,7 @@ public class AddressBookController {
     /**
      * 新增
      */
-    @ApiOperation("新增")
+    @ApiOperation("新增地址簿")
     @PostMapping
     public R<AddressBook> save(@RequestBody AddressBook addressBook, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -49,6 +49,7 @@ public class AddressBookController {
     /**
      * 根据id查询地址
      */
+    @ApiOperation("根据id查询地址")
     @GetMapping("/{id}")
     public R<Object> get(@PathVariable Long id) {
         AddressBook addressBook = addressBookService.getById(id);
@@ -62,6 +63,7 @@ public class AddressBookController {
     /**
      * 查询默认地址
      */
+    @ApiOperation("查询默认地址")
     @GetMapping("default")
     public R<AddressBook> getDefault(HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -78,6 +80,7 @@ public class AddressBookController {
     /**
      * 设置默认地址
      */
+    @ApiOperation("设置默认地址")
     @PutMapping("default")
     public R<AddressBook> setDefault(@RequestBody AddressBook addressBook, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -90,6 +93,7 @@ public class AddressBookController {
     /**
      * 查询指定用户的全部地址
      */
+    @ApiOperation("查询指定用户的全部地址")
     @GetMapping("/list")
     public R<List<AddressBook>> list(HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -98,6 +102,7 @@ public class AddressBookController {
         return R.success(addressList);
     }
 
+    @ApiOperation("逻辑删除地址簿")
     @DeleteMapping
     public R<String> delete(Long ids ,HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -110,6 +115,7 @@ public class AddressBookController {
     }
 
     @PutMapping
+    @ApiOperation("逻辑删除地址簿")
     public R<String> update(@RequestBody AddressBook addressBook,HttpSession session) {
         User user = (User) session.getAttribute("user");
         addressBook.setUpdateUser(user.getId());

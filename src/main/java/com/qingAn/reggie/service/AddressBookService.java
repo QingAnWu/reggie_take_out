@@ -42,7 +42,6 @@ public interface AddressBookService  {
 
     /**
      * 逻辑删除与修改
-     * @param user
      */
     void updateDeleteAddressBook(AddressBook addressBook);
 }

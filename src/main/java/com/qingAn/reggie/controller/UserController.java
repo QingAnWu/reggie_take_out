@@ -4,6 +4,7 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.User;
 import com.qingAn.reggie.service.UserService;
 import com.qingAn.reggie.utils.ValidateCodeUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import java.util.Map;
  * @date 2022/09/02 20:55
  */
 @Slf4j
-@ApiOperation("用户控制器")
+@Api(value = "/user",tags = "用户控制器")
 @RequestMapping("/user")
 @RestController
 public class UserController {
@@ -34,6 +35,7 @@ public class UserController {
      * @param user
      * @return
      */
+    @ApiOperation("发送短信")
     @PostMapping("/sendMsg")
     public R<String> sendMg(@RequestBody User user, HttpSession session) {
         String code = ValidateCodeUtils.generateValidateCode4String(4);
@@ -49,6 +51,7 @@ public class UserController {
     /**
      * 登陆校验
      */
+    @ApiOperation("登陆校验")
     @PostMapping("/login")
     public R<User> login(@RequestBody Map<String, String> param, HttpSession session) {
         //取出参数

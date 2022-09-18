@@ -2,6 +2,7 @@ package com.qingAn.reggie.controller;
 
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.exception.SystemException;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.util.IOUtils;
@@ -23,7 +24,7 @@ import java.util.UUID;
  */
 @Slf4j
 @RestController
-@ApiOperation("文件上传和下载")
+@Api(value = "/common" ,tags = "文件上传和下载")
 @RequestMapping("/common")
 public class CommonController {
 
@@ -36,6 +37,7 @@ public class CommonController {
      * @param file
      * @return
      */
+    @ApiOperation("文件上传")
     @PostMapping("/upload")
     public R<String> upload(MultipartFile file) {
 
@@ -67,6 +69,7 @@ public class CommonController {
      * @param fileName
      * @param response
      */
+    @ApiOperation("文件下载")
     @GetMapping("/download")
     public void download(String name, HttpServletResponse response) {
         //获取上传的地址

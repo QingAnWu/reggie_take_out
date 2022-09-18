@@ -6,6 +6,7 @@ import com.qingAn.reggie.entity.DishDto;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.service.DishService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.List;
  * @date 2022/08/28 23:34
  */
 @RestController
-@ApiOperation("菜品控制器")
+@Api(value = "/dish" ,tags = "菜品控制器")
 @RequestMapping("/dish")
 public class DishController {
     @Autowired
@@ -32,6 +33,7 @@ public class DishController {
      * @param dishDto  用于接收菜品与口味信息
      * @return
      */
+    @ApiOperation("保存菜品并且携带口味信息")
     @PostMapping
     public R<String> save(@RequestBody DishDto dishDto, HttpSession session) {
         //1. 获取当前登陆者,补全创建者与更新者信息
@@ -50,11 +52,13 @@ public class DishController {
      * @param pageSize
      * @return
      */
+    @ApiOperation("菜品信息分页查询")
     @GetMapping("/page")
     public R<Page<DishDto>> findByPage(Integer page, Integer pageSize,String name) {
         return R.success(dishService.page(page, pageSize,name));
     }
 
+    @ApiOperation("按 ID 查找")
     @GetMapping("/{id}")
     public R<Dish> get(@PathVariable Long id){
         Dish byId = dishService.findById(id);
@@ -66,6 +70,7 @@ public class DishController {
      * @param dishDto 页面传递过来的参数包含菜品与口味
      * @return
      */
+    @ApiOperation("修改菜品")
     @PutMapping
     public R<String> update(@RequestBody  DishDto dishDto,HttpSession session) {
         //1. 获取当前登陆者,设置当前的修改人
@@ -79,6 +84,7 @@ public class DishController {
      * 根据id关闭售卖状态
      * @param ids
      */
+    @ApiOperation("根据id关闭售卖状态")
     @PostMapping("/status/0")
     public R<String> updateStatus0(String ids , HttpSession session){
         String[] list = ids.split(",");
@@ -94,6 +100,7 @@ public class DishController {
      * 根据id开启售卖状态
      * @param ids
      */
+    @ApiOperation("根据id开启售卖状态")
     @PostMapping("/status/1")
     public R<String> updateStatus1(String ids , HttpSession session){
         String[] list = ids.split(",");
@@ -105,6 +112,7 @@ public class DishController {
         return R.success("启动售卖");
     }
 
+    @ApiOperation("根据批量删除菜品")
     @DeleteMapping
     public R<String> deleteDish(String ids){
         String[] idList = ids.split(",");
@@ -118,6 +126,7 @@ public class DishController {
      * @param categoryId
      * @return
      */
+    @ApiOperation("根据菜品类别的id查找的菜品")
     @GetMapping("/list")
     public R<List<DishDto>> list(Long categoryId,@RequestParam(defaultValue = "1") Integer status) {
         List<DishDto> dishList = dishService.findByCategoryId(categoryId,status);
