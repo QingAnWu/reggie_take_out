@@ -1,5 +1,6 @@
 package com.qingAn.reggie.common;
 
+import io.swagger.annotations.*;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -12,22 +13,27 @@ import java.util.Map;
  * @author qingAn
  */
 @Data
+@ApiModel("封装类")
 public class R<T> {
     /**
      * 编码：1成功，0和其它数字为失败
      */
+    @ApiModelProperty("编码")
     private Integer code;
     /**
      * 错误信息
      */
+    @ApiModelProperty("错误信息")
     private String msg;
     /**
      * 数据
      */
+    @ApiModelProperty("数据")
     private T data;
     /**
      * 动态数据
      */
+    @ApiModelProperty("动态数据")
     private Map map = new HashMap();
 
     /**

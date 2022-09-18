@@ -55,7 +55,6 @@ class ReggieTakeOutApplicationTests {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("ikun");
         message.setText("练习两年半的实习生，鸡你太美");
-        message.setTo("ytmfssquvjjj@163.com");
         // message.setTo("571206595@qq.com");
         message.setFrom("wuqingan3306@163.com");
         mailSender.send(message);

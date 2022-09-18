@@ -122,7 +122,7 @@ public class DishServiceImpl implements DishService {
      * @return
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateWithFlavor(DishDto dishDto) {
         //1. 补全修改时间
         dishDto.setUpdateTime(LocalDateTime.now());
