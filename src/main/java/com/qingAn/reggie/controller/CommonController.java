@@ -66,7 +66,7 @@ public class CommonController {
     /**
      * 文件下载
      *
-     * @param fileName
+     * @param name
      * @param response
      */
     @ApiOperation("文件下载")
@@ -74,6 +74,7 @@ public class CommonController {
     public void download(String name, HttpServletResponse response) {
         //获取上传的地址
         String path = CommonController.class.getResource("/").getPath();
+        log.info(path);
         String filePath = path + baseDir + "/" + name;
 
         //获取文件传入流

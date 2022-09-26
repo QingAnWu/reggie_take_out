@@ -4,14 +4,21 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Category;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.entity.Page;
+import com.qingAn.reggie.exception.SystemException;
 import com.qingAn.reggie.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,6 +33,40 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("exportExcel")
+    public void exportExcal(HttpServletResponse response){
+        List<Category> categoryList = categoryService.findAllByType(null);
+        response.setHeader("content-disposition","attachment;filename=category.xlsx");
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("学生信息表");
+
+        Row row = sheet.createRow(0);
+        row.createCell(0).setCellValue("分类名称");
+        row.createCell(1).setCellValue("分类类型");
+        row.createCell(2).setCellValue("分类排序");
+        row.createCell(3).setCellValue("创建时间");
+        row.createCell(4).setCellValue("修改时间");
+
+        for (int i = 0; i < categoryList.size(); i++) {
+            row = sheet.createRow(i + 1);
+            Category category = categoryList.get(i);
+
+            row.createCell(0).setCellValue(category.getType());
+            row.createCell(1).setCellValue(category.getName());
+            row.createCell(2).setCellValue(category.getSort());
+            row.createCell(3).setCellValue(category.getCreateTime().toLocalDate().toString());
+            row.createCell(4).setCellValue(category.getUpdateTime().toLocalDate().toString());
+
+        }
+
+        try {
+            workbook.write(response.getOutputStream());
+        } catch (IOException e) {
+            throw new SystemException("输出错误",e);
+        }
+    }
+
+
     /**
      * 添加分类
      *
@@ -33,7 +74,6 @@ public class CategoryController {
      * @param session
      * @return 添加类别成功
      */
-
     @ApiOperation("添加类别")
     @PostMapping
     public R<String> saveCategory(@RequestBody Category category, HttpSession session) {

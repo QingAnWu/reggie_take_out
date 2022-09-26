@@ -1,3 +1,11 @@
 spring:
   profiles:
     active: dev
+  redis:
+    host: 39.108.179.145
+    port: 6379
+    password: root6379
+    database: 0
+    pool:
+      max-active: 10
+      max-idle: 5

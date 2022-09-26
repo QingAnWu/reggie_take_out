@@ -4,4 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qingAn.reggie.mapper.OrderMapper">
 
+
+    <!--@Param("number") String number ,@Param("beginTime") Date beginTime ,@Param("endTime") Date endTime-->
+    <select id="pagingQuery" resultType="com.qingAn.reggie.entity.Orders">
+        select * from orders
+        <where>
+            <if test="number!=null and number!= ''">
+                number like "%"#{number}"%"
+            </if>
+            <if test="beginTime != null and endTime != null">
+                and order_time between beginTime and endTime
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.qingAn.reggie.controller.CommonController;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.mapper.EmployeeMapper;
+import com.qingAn.reggie.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,15 @@ class ReggieTakeOutApplicationTests {
         // message.setTo("571206595@qq.com");
         message.setFrom("wuqingan3306@163.com");
         mailSender.send(message);
+    }
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Test
+    public void redisTest(){
+        redisUtil.set("name","hello");
+        System.out.println(redisUtil.get("name"));
     }
 
 }

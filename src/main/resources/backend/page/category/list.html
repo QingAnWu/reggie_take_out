@@ -30,6 +30,12 @@
         >
           + 新增套餐分类
         </el-button>
+        <el-button
+          type="primary"
+          @click="exportExcel()"
+        >
+          导出分类信息
+        </el-button>
       </div>
       <el-table
         :data="tableData"
@@ -204,6 +210,9 @@
             this.classData.sort = ''
             this.classData.dialogVisible = true
           },
+          exportExcel(){
+            location.href="/category/exportExcel"
+          },
           editHandle(dat) {
             this.classData.title = '修改分类'
             this.action = 'edit'
@@ -263,7 +272,7 @@
                   } else {
                     this.$message.error('排序只能输入数字类型')
                   }
-                  
+
               } else {
                   this.$message.error('请输入分类名称或排序')
               }

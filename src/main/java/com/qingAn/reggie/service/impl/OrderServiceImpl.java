@@ -107,7 +107,5 @@ public class OrderServiceImpl implements OrderService {
 
         //删除当前用户的购物车列表数据
         shoppingCartMapper.clean(userId);
-
-
     }
 }
