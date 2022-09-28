@@ -14,5 +14,7 @@ public interface OrderMapper {
     @Insert("insert into orders values(#{id},#{number},#{status},#{userId},#{addressBookId},#{orderTime},#{checkoutTime},#{payMethod},#{amount},#{remark},#{phone},#{address},#{userName},#{consignee})")
     void save(Orders orders);
 
-    List<Orders> pagingQuery(@Param("number") String number ,@Param("beginTime") Date beginTime ,@Param("endTime") Date endTime);
+    List<Orders> pagingQuery(@Param("number") String number , @Param("beginTime") Date beginTime , @Param("endTime") Date endTime);
+
+    List<Orders> userPage(Long id);
 }

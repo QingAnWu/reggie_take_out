@@ -13,7 +13,16 @@
                 number like "%"#{number}"%"
             </if>
             <if test="beginTime != null and endTime != null">
-                and order_time between beginTime and endTime
+                and order_time between #{beginTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="userPage" resultType="com.qingAn.reggie.entity.Orders">
+        select * from orders
+        <where>
+            <if test="id != null and id !=''">
+                user_id = #{id}
             </if>
         </where>
     </select>

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.List;
@@ -51,7 +50,7 @@ class ReggieTakeOutApplicationTests {
         System.out.println(path+baseDir);
     }
 
-    @Test
+/*    @Test
     public void contextLoads() {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("ikun");
@@ -59,15 +58,15 @@ class ReggieTakeOutApplicationTests {
         // message.setTo("571206595@qq.com");
         message.setFrom("wuqingan3306@163.com");
         mailSender.send(message);
-    }
+    }*/
 
     @Autowired
     private RedisUtil redisUtil;
 
-    @Test
+/*    @Test
     public void redisTest(){
         redisUtil.set("name","hello");
         System.out.println(redisUtil.get("name"));
-    }
+    }*/
 
 }

@@ -66,4 +66,11 @@ public class UserController {
         session.setAttribute("user", user);
         return R.success(user);
     }
+
+    @ApiOperation("退出登录")
+    @PostMapping("/loginout")
+    public R<String> logout(HttpSession session){
+        session.invalidate();
+        return R.success("成功退出");
+    }
 }

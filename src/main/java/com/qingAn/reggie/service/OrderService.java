@@ -1,6 +1,11 @@
 package com.qingAn.reggie.service;
 
+import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Orders;
+import com.qingAn.reggie.entity.Page;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 public interface OrderService {
 
@@ -11,4 +16,8 @@ public interface OrderService {
      * @return
      */
     void submit(Orders orders, Long userId);
+
+    R<Page<Orders>> pagingQuery(int page, int pageSize, String number, Date beginTime, Date endTime);
+
+    R<Page<Orders>> userPage(int page, int pageSize, HttpSession session);
 }

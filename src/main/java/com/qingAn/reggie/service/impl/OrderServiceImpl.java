@@ -1,5 +1,8 @@
 package com.qingAn.reggie.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.*;
 import com.qingAn.reggie.mapper.*;
 import com.qingAn.reggie.service.OrderService;
@@ -8,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -107,5 +112,38 @@ public class OrderServiceImpl implements OrderService {
 
         //删除当前用户的购物车列表数据
         shoppingCartMapper.clean(userId);
+    }
+
+    @Override
+    public R<Page<Orders>> pagingQuery(int page, int pageSize, String number, Date beginTime, Date endTime) {
+        PageHelper.startPage(page, pageSize);
+        List<Orders> orders = orderMapper.pagingQuery(number, beginTime, endTime);
+        PageInfo<Orders> ordersPageInfo = new PageInfo(orders);
+
+        Page<Orders> objectPage = new Page<>(
+                ordersPageInfo.getList(),
+                ordersPageInfo.getTotal(),
+                ordersPageInfo.getPageSize(),
+                ordersPageInfo.getPageNum()
+        );
+
+
+        return R.success(objectPage);
+    }
+
+    @Override
+    public R<Page<Orders>> userPage(int page, int pageSize, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        PageHelper.startPage(page,pageSize);
+        List<Orders> orders = orderMapper.userPage(user.getId());
+        PageInfo<Orders> ordersPageInfo = new PageInfo<>(orders);
+
+        Page<Orders> ordersPage = new Page<>();
+        ordersPage.setPage(ordersPageInfo.getPageNum());
+        ordersPage.setRecords(ordersPageInfo.getList());
+        ordersPage.setTotal(ordersPageInfo.getTotal());
+        ordersPage.setPageSize(ordersPageInfo.getPageSize());
+        return R.success(ordersPage);
     }
 }
