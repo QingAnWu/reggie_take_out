@@ -3,6 +3,7 @@ package com.qingAn.reggie.service.impl;
 import com.qingAn.reggie.entity.User;
 import com.qingAn.reggie.mapper.UserMapper;
 import com.qingAn.reggie.service.UserService;
+import com.qingAn.reggie.utils.ChineseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
                 dbUser = new User();
                 dbUser.setPhone(phone);
                 dbUser.setStatus(1);
+                dbUser.setName(ChineseUtil.getRandomChineseName());
                 userMapper.addUser(dbUser);
                 dbUser = userMapper.findByPhone(phone);
             }

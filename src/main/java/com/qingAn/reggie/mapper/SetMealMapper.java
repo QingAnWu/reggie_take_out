@@ -61,4 +61,8 @@ public interface SetMealMapper {
     void deleteByIds(@Param("ids") List<Long> ids, @Param("opr") Long opr, @Param("updateTime") LocalDateTime updateTime);
 
     void updateStatus(@Param("ids") List<Long> ids, @Param("status") Integer status, @Param("opr") Long opr, @Param("updateTime") LocalDateTime updateTime);
+
+    Setmeal queryId(long id);
+
+    void update(SetmealDto setmealDto);
 }

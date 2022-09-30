@@ -2,6 +2,7 @@ package com.qingAn.reggie.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.*;
 import com.qingAn.reggie.exception.BusinessException;
 import com.qingAn.reggie.mapper.CategoryMapper;
@@ -131,5 +132,44 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public List<Setmeal> findByCategoryId(Long categoryId, Integer status) {
         return setMealMapper.findByCategoryId(categoryId,status);
+    }
+
+    @Override
+    public R<SetmealDto> queryId(long id) {
+        List<SetmealDish> setmealDishes = setmealDishMapper.queryId(id);
+        Setmeal setmeals = setMealMapper.queryId(id);
+        SetmealDto setmealDto = new SetmealDto();
+        BeanUtils.copyProperties(setmeals,setmealDto);
+        setmealDto.setSetmealDishes(setmealDishes);
+        return R.success(setmealDto);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SetmealDto setmealDto) {
+        setmealDto.setUpdateTime(LocalDateTime.now());
+
+        try {
+            setMealMapper.update(setmealDto);
+        } catch (Exception e) {
+            throw new BusinessException("数据有误",e);
+        }
+
+        setmealDishMapper.deleteById(setmealDto.getId());
+
+        List<SetmealDish> setmealDishes = setmealDto.getSetmealDishes();
+        setmealDishes.forEach(
+                setmealDish -> {
+                    setmealDish.setSort(0);
+                    setmealDish.setSetmealId(setmealDto.getId());
+                    setmealDish.setUpdateUser(setmealDto.getUpdateUser());
+                    setmealDish.setCreateUser(setmealDto.getUpdateUser());
+                    setmealDish.setUpdateTime(LocalDateTime.now());
+                    setmealDish.setCreateTime(LocalDateTime.now());
+                }
+        );
+
+        setmealDishMapper.saveBatch(setmealDishes);
+
     }
 }

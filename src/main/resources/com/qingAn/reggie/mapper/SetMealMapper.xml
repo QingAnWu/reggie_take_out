@@ -19,6 +19,37 @@
         </where>
     </update>
 
+    <update id="update">
+        update setmeal
+        <set>
+            <if test="categoryId !=null">
+                category_id=#{categoryId},
+            </if>
+            <if test="name !=null and name !=''">
+                name=#{name},
+            </if>
+            <if test="price !=null">
+                price=#{price},
+            </if>
+            <if test="code !=null and code != '' ">
+                code=#{code},
+            </if>
+            <if test="description !=null and description !=''">
+                description=#{description},
+            </if>
+            <if test="image !=null and image !=''">
+                image=#{image},
+            </if>
+            <if test="updateTime !=null ">
+                update_time=#{updateTime},
+            </if>
+            <if test="updateUser !=null ">
+                update_user=#{updateUser},
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+
     <select id="findByName" resultType="com.qingAn.reggie.entity.Setmeal">
         select * from setmeal where is_deleted = 0
         <if test="name!=null and name!=''">
@@ -42,6 +73,16 @@
         <if test="status!=null">
             and status =#{status}
         </if>
+    </select>
+
+    <select id="queryId" resultType="com.qingAn.reggie.entity.Setmeal">
+        select * from setmeal
+        <where>
+            <if test="id!=null and id!=''">
+                id = #{id}
+            </if>
+            and is_deleted = 0
+        </where>
     </select>
 
 </mapper>

@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.*;
+import com.qingAn.reggie.exception.BusinessException;
 import com.qingAn.reggie.mapper.*;
 import com.qingAn.reggie.service.OrderService;
 import com.qingAn.reggie.utils.UUIDUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -132,18 +135,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public R<Page<Orders>> userPage(int page, int pageSize, HttpSession session) {
+    public R<Page<OrderDto>> userPage(int page, int pageSize, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        PageHelper.startPage(page,pageSize);
+        PageHelper.startPage(page, pageSize);
         List<Orders> orders = orderMapper.userPage(user.getId());
-        PageInfo<Orders> ordersPageInfo = new PageInfo<>(orders);
 
-        Page<Orders> ordersPage = new Page<>();
+        List<OrderDto> orderDtos = orders.stream().map(
+                order -> {
+                    OrderDto orderDto = new OrderDto();
+                    BeanUtils.copyProperties(order, orderDto);
+
+                    List<OrderDetail> orderDetails = orderDetailMapper.queryByOrderID(order.getId());
+                    orderDto.setOrderDetails(orderDetails);
+                    return orderDto;
+                }
+        ).collect(Collectors.toList());
+
+        PageInfo<OrderDto> ordersPageInfo = new PageInfo(orderDtos);
+
+        Page<OrderDto> ordersPage = new Page<>();
+
         ordersPage.setPage(ordersPageInfo.getPageNum());
         ordersPage.setRecords(ordersPageInfo.getList());
         ordersPage.setTotal(ordersPageInfo.getTotal());
         ordersPage.setPageSize(ordersPageInfo.getPageSize());
+
+        if (ordersPageInfo.getPageNum() < page) {
+            throw new BusinessException("没有更多的数据了");
+        }
+
         return R.success(ordersPage);
     }
 }

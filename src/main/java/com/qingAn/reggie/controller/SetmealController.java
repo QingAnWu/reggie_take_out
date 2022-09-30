@@ -2,10 +2,7 @@ package com.qingAn.reggie.controller;
 
 
 import com.qingAn.reggie.common.R;
-import com.qingAn.reggie.entity.Employee;
-import com.qingAn.reggie.entity.Page;
-import com.qingAn.reggie.entity.Setmeal;
-import com.qingAn.reggie.entity.SetmealDto;
+import com.qingAn.reggie.entity.*;
 import com.qingAn.reggie.service.SetmealService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -90,6 +87,31 @@ public class SetmealController {
     @GetMapping("list")
     public R<List<Setmeal>> list(Long categoryId, Integer status) {
         return R.success(setmealService.findByCategoryId(categoryId,status));
+    }
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    @ApiOperation("根据id查询")
+    @GetMapping("/{id}")
+    public R<SetmealDto> queryId(@PathVariable long id){
+        return setmealService.queryId(id);
+    }
+
+    /**
+     * 修改套餐
+     * @return
+     */
+    @ApiOperation("修改套餐")
+    @PutMapping
+    public R<String> update(@RequestBody SetmealDto setmealDto ,HttpSession session){
+        Employee employee = (Employee) session.getAttribute("employee");
+        setmealDto.setUpdateUser(employee.getId());
+        setmealDto.setCreateUser(employee.getId());
+        setmealService.update(setmealDto);
+        return R.success("成功修改");
     }
 
 }

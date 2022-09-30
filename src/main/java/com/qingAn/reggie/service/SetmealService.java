@@ -1,5 +1,6 @@
 package com.qingAn.reggie.service;
 
+import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.entity.Setmeal;
 import com.qingAn.reggie.entity.SetmealDto;
@@ -39,4 +40,8 @@ public interface SetmealService {
     void updateStatus(List<Long> ids ,Integer status, Long opr);
 
     List<Setmeal> findByCategoryId(Long categoryId, Integer status);
+
+    R<SetmealDto> queryId(long id);
+
+    void update(SetmealDto setmealDto);
 }

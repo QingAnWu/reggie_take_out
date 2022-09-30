@@ -1,6 +1,7 @@
 package com.qingAn.reggie.controller;
 
 import com.qingAn.reggie.common.R;
+import com.qingAn.reggie.entity.OrderDto;
 import com.qingAn.reggie.entity.Orders;
 import com.qingAn.reggie.entity.Page;
 import com.qingAn.reggie.entity.User;
@@ -50,7 +51,7 @@ public class OrderController {
 
     @ApiOperation("用户端订单")
     @GetMapping("/userPage")
-    public R<Page<Orders>> userPage(int page,int pageSize ,HttpSession session){
+    public R<Page<OrderDto>> userPage(int page, int pageSize , HttpSession session){
         return orderService.userPage(page,pageSize,session);
     }
 }

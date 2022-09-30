@@ -24,7 +24,7 @@ public class SMSUtils {
 		 * accessKeyId 密钥id
 		 * secret 密钥值
 		 */
-		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "", "");
+		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAIctmB3sD7cWEQ", "79lRVTR1sXurdEGTKlvi2yyWkm5jCR");
 		IAcsClient client = new DefaultAcsClient(profile);
 
 		SendSmsRequest request = new SendSmsRequest();
@@ -41,4 +41,9 @@ public class SMSUtils {
 		}
 	}
 
+	public static void main(String[] args) {
+		String code = ValidateCodeUtils.generateValidateCode(4).toString();
+		System.out.println("验证码："+code);
+		SMSUtils.sendMessage("阿里云短信测试","SMS_154950909","15922750321",code);
+	}
 }

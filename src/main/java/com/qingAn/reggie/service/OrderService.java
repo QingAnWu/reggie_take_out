@@ -1,6 +1,7 @@
 package com.qingAn.reggie.service;
 
 import com.qingAn.reggie.common.R;
+import com.qingAn.reggie.entity.OrderDto;
 import com.qingAn.reggie.entity.Orders;
 import com.qingAn.reggie.entity.Page;
 
@@ -19,5 +20,5 @@ public interface OrderService {
 
     R<Page<Orders>> pagingQuery(int page, int pageSize, String number, Date beginTime, Date endTime);
 
-    R<Page<Orders>> userPage(int page, int pageSize, HttpSession session);
+    R<Page<OrderDto>> userPage(int page, int pageSize, HttpSession session);
 }

@@ -19,4 +19,14 @@
             #{id}
         </foreach>
     </update>
+
+    <select id="queryId" resultType="com.qingAn.reggie.entity.SetmealDish">
+        select * from setmeal_dish
+        <where>
+            <if test="id!=null and id!=''">
+                setmeal_id = #{id}
+            </if>
+            and is_deleted = 0
+        </where>
+    </select>
 </mapper>

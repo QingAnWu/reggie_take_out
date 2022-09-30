@@ -46,16 +46,4 @@ public class ValidateCodeUtils {
         String capstr = hash1.substring(0, length);
         return capstr;
     }
-
-    public static void main(String[] args) {
-        //生成一个4为随机数字验证码
-        String code4String = ValidateCodeUtils.generateValidateCode4String(4);
-
-        //打印验证码
-        System.out.println("验证码 = " + code4String);
-
-        //发送短信
-        SMSUtils.sendMessage("卿安", "摸板编号", "手机号", code4String);
-
-    }
 }
