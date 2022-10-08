@@ -24,7 +24,7 @@ public class SMSUtils {
 		 * accessKeyId 密钥id
 		 * secret 密钥值
 		 */
-		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAIctmB3sD7cWEQ", "79lRVTR1sXurdEGTKlvi2yyWkm5jCR");
+		DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "", "");
 		IAcsClient client = new DefaultAcsClient(profile);
 
 		SendSmsRequest request = new SendSmsRequest();
