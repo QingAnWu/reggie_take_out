@@ -10,9 +10,9 @@ import java.io.Serializable;
 @Data
 @ApiModel("用户信息")
 public class User implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
 
+
+    private static final long serialVersionUID = -8981042553943722639L;
     /**
      * 用户id
      */

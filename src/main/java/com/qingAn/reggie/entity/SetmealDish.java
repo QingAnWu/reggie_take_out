@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("套餐菜品关系")
 public class SetmealDish implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -1621568242225047044L;
     @ApiModelProperty("套餐菜品关系id")
     private Long id;
 

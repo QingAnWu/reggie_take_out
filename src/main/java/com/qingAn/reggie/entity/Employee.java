@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("员工信息")
 public class Employee implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4807652658640141478L;
     /**
      * 用户id
      *    // @JsonFormat(shape = JsonFormat.Shape.STRING)

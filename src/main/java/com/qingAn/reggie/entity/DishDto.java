@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
  */
 @Data
 @ApiModel("菜品及口味")
-public class DishDto extends Dish {
+public class DishDto extends Dish implements Serializable {
+    private static final long serialVersionUID = -3029020810674261297L;
     /**
      * 口味
      */

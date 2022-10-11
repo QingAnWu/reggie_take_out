@@ -22,10 +22,10 @@ public class RedisConfig {
         template.setKeySerializer(RedisSerializer.string());
         template.setHashKeySerializer(RedisSerializer.string());
         // value、hash的value 采用 Jackson 序列化方式
-        template.setValueSerializer(RedisSerializer.json());
-        template.setHashValueSerializer(RedisSerializer.json());
-        template.afterPropertiesSet();
-        
+        // template.setValueSerializer(RedisSerializer.json());
+        // template.setHashValueSerializer(RedisSerializer.json());
+        // template.afterPropertiesSet();
+
         return template;
     }
 }

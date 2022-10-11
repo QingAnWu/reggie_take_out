@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("订单")
 public class Orders implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 3205360506425566683L;
     @ApiModelProperty("订单id")
     private Long id;
     /**

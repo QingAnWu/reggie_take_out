@@ -7,6 +7,7 @@ import com.qingAn.reggie.mapper.CategoryMapper;
 import com.qingAn.reggie.mapper.DishFlavorMapper;
 import com.qingAn.reggie.mapper.DishMapper;
 import com.qingAn.reggie.service.DishService;
+import com.qingAn.reggie.utils.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,9 @@ public class DishServiceImpl implements DishService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 菜品保存方法
@@ -151,26 +155,29 @@ public class DishServiceImpl implements DishService {
 
     /**
      * 根据id关闭售卖状态
+     *
      * @param ids
      */
     @Override
-    public void updateStatus0(List ids ,Dish dish) {
+    public void updateStatus0(List ids, Dish dish) {
         dish.setUpdateTime(LocalDateTime.now());
-        dishMapper.updateStatus0(ids,dish);
+        dishMapper.updateStatus0(ids, dish);
     }
 
     /**
      * 根据id开启售卖状态
+     *
      * @param ids
      */
     @Override
-    public void updateStatus1(List ids ,Dish dish) {
+    public void updateStatus1(List ids, Dish dish) {
         dish.setUpdateTime(LocalDateTime.now());
-        dishMapper.updateStatus1(ids,dish);
+        dishMapper.updateStatus1(ids, dish);
     }
 
     /**
      * 根据批量删除菜品
+     *
      * @param ids
      */
     @Override
@@ -180,25 +187,38 @@ public class DishServiceImpl implements DishService {
 
     /**
      * 方法作用： 根据菜品类别的id查找的菜品
+     *
      * @param categoryId
      * @return
      */
     @Override
-    public List<DishDto> findByCategoryId(Long categoryId,Integer status) {
-        List<Dish> dishList = dishMapper.findByCategoryId(categoryId,status);
-        //遍历所有的dish，把dish转换为dto
-        List<DishDto> dishDtoList = dishList.stream().map(dish -> {
-            DishDto dishDto = new DishDto();
-            //属性拷贝
-            BeanUtils.copyProperties(dish, dishDto);
-            //查看该菜品的口味信息
-            List<DishFlavor> dishFlavorList = dishFlavorMapper.findByDishId(dish.getId());
-            dishDto.setFlavors(dishFlavorList);
-            //类别信息
-            Category category = categoryMapper.findById(dish.getCategoryId());
-            dishDto.setCategoryName(category.getName());
-            return dishDto;
-        }).collect(Collectors.toList());
+    public List<DishDto> findByCategoryId(Long categoryId, Integer status) {
+
+        List<DishDto> dishDtoList = null;
+        //1. 先查询redis，查看redis是否存在该类别的菜品
+        String key = "dish_"+categoryId+"_"+status;
+        dishDtoList = (List<DishDto>) redisUtil.get(key);
+
+
+        if (dishDtoList==null){
+            List<Dish> dishList = dishMapper.findByCategoryId(categoryId, status);
+            //遍历所有的dish，把dish转换为dto
+            dishDtoList = dishList.stream().map(dish -> {
+                DishDto dishDto = new DishDto();
+                //属性拷贝
+                BeanUtils.copyProperties(dish, dishDto);
+                //查看该菜品的口味信息
+                List<DishFlavor> dishFlavorList = dishFlavorMapper.findByDishId(dish.getId());
+                dishDto.setFlavors(dishFlavorList);
+                //类别信息
+                Category category = categoryMapper.findById(dish.getCategoryId());
+                dishDto.setCategoryName(category.getName());
+                return dishDto;
+            }).collect(Collectors.toList());
+
+            //如果菜品是从数据库中查询出来的，那么必须要添加到缓存中 ，缓存保留一天
+            redisUtil.set(key,dishDtoList,60*60*24);
+        }
         return dishDtoList;
     }
 }

@@ -22,7 +22,7 @@
             <entry key="lastExternalPluginCheckTime" value="1661136898313" />
           </map>
         </option>
-        <option name="version" value="37" />
+        <option name="version" value="42" />
       </configuration>
     </facet>
   </component>
@@ -37,6 +37,7 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-redis:2.7.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.7.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.7.3" level="project" />

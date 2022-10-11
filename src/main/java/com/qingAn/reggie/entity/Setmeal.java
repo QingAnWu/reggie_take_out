@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("套餐")
 public class Setmeal implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -3232927967488469437L;
     @ApiModelProperty("套餐id")
     private Long id;
 

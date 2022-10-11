@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("菜品")
 public class Dish implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 7521084972069061879L;
     /**
      * 菜品id
      */

@@ -2,6 +2,7 @@ package com.qingAn.reggie;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.controller.CommonController;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.mapper.EmployeeMapper;
@@ -24,6 +25,7 @@ class ReggieTakeOutApplicationTests {
 
     @Autowired(required = false)
     private JavaMailSenderImpl mailSender;
+
 
     @Test
     void TestcontextLoads() {
@@ -63,10 +65,10 @@ class ReggieTakeOutApplicationTests {
     @Autowired
     private RedisUtil redisUtil;
 
-/*    @Test
+    @Test
     public void redisTest(){
-        redisUtil.set("name","hello");
+        redisUtil.set("name", R.success("成功"));
         System.out.println(redisUtil.get("name"));
-    }*/
+    }
 
 }

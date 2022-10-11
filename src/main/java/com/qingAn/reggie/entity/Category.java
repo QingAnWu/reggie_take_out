@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @ApiModel("类别分类")
 public class Category implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -3710558192480467749L;
     /**
      * 类别id
      */

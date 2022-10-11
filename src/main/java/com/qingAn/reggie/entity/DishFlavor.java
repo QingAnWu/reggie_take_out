@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @ApiModel("菜品口味")
 public class DishFlavor implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = -3342015924407768438L;
     @ApiModelProperty("菜品口味id")
     private Long id;
     /**

@@ -12,8 +12,9 @@ import java.time.LocalDateTime;
 @Data
 @ApiModel("地址簿")
 public class AddressBook implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+
+    private static final long serialVersionUID = 3779782727982369896L;
     @ApiModelProperty("地址簿id")
     private Long id;
 
