@@ -21,6 +21,18 @@ spring:
         smtp:
           ssl:
             enable: true
+  redis:
+    host: localhost
+    port: 6379
+    #    password: qwerasdfzxcv
+    database: 0
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 5
+  cache:
+    redis:
+      time-to-live: 1800000
 
 #  main:
 #    #设置为 true 来自动中断循环
@@ -43,3 +55,4 @@ pagehelper:
 #设置存储上传的位置
 takeout:
   path: upload/
+

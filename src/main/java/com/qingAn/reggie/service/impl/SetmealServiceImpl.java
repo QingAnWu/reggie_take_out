@@ -11,6 +11,8 @@ import com.qingAn.reggie.mapper.SetmealDishMapper;
 import com.qingAn.reggie.service.SetmealService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,7 @@ public class SetmealServiceImpl implements SetmealService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public void save(SetmealDto setmealDto) {
         //补全setmeal的信息，比如:、修改、创建时间、
         setmealDto.setCreateTime(LocalDateTime.now());
@@ -104,6 +107,7 @@ public class SetmealServiceImpl implements SetmealService {
      * @return
      */
     @Override
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public void deleteByIds(List<Long> ids, Long opr) {
         //1.检查要删除的套餐里面有没有在售,如果存在着在售套餐，直接抛出异常，不能删除
         Long count = setMealMapper.queryDishWithStatus(ids);
@@ -119,6 +123,7 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public void updateStatus(List<Long> ids, Integer status, Long opr) {
         setMealMapper.updateStatus(ids, status, opr, LocalDateTime.now());
     }
@@ -130,6 +135,7 @@ public class SetmealServiceImpl implements SetmealService {
      * @return
      */
     @Override
+    @Cacheable(value = "setmealCache",key = "#categoryId+'_'+#status",unless = "#result==null")
     public List<Setmeal> findByCategoryId(Long categoryId, Integer status) {
         return setMealMapper.findByCategoryId(categoryId,status);
     }
@@ -145,6 +151,7 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
+    @CacheEvict(value = "setmealCache",allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void update(SetmealDto setmealDto) {
         setmealDto.setUpdateTime(LocalDateTime.now());

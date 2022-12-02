@@ -6,12 +6,12 @@ import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.controller.CommonController;
 import com.qingAn.reggie.entity.Employee;
 import com.qingAn.reggie.mapper.EmployeeMapper;
-import com.qingAn.reggie.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.List;
@@ -63,12 +63,12 @@ class ReggieTakeOutApplicationTests {
     }*/
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisTemplate redisTemplate;
 
     @Test
     public void redisTest(){
-        redisUtil.set("name", R.success("成功"));
-        System.out.println(redisUtil.get("name"));
+        redisTemplate.opsForValue().set("name", R.success("成功"));
+        System.out.println(redisTemplate.opsForValue().get("name"));
     }
 
 }

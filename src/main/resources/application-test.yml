@@ -21,6 +21,15 @@ spring:
         smtp:
           ssl:
             enable: true
+  redis:
+    host: 39.108.179.145
+    port: 6379
+    password: qwerasdfzxcv
+    database: 0
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 5
 
 #  main:
 #    #设置为 true 来自动中断循环

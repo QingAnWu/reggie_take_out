@@ -3,6 +3,7 @@ package com.qingAn.reggie.common;
 import io.swagger.annotations.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,8 @@ import java.util.Map;
  */
 @Data
 @ApiModel("封装类")
-public class R<T> {
+public class R<T> implements Serializable {
+    private static final long serialVersionUID = 2079949529102029854L;
     /**
      * 编码：1成功，0和其它数字为失败
      */

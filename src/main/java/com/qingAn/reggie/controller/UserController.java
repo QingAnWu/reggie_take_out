@@ -3,12 +3,13 @@ package com.qingAn.reggie.controller;
 import com.qingAn.reggie.common.R;
 import com.qingAn.reggie.entity.User;
 import com.qingAn.reggie.service.UserService;
-import com.qingAn.reggie.utils.RedisUtil;
 import com.qingAn.reggie.utils.ValidateCodeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author qingAn
@@ -31,7 +33,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisTemplate redisTemplate;
 
     /**
      * 作用： 发送短信
@@ -47,7 +49,8 @@ public class UserController {
         //发送手机验证码
 
         //将生成的验证码存储在redis中,并设置有效时间为一分钟
-        redisUtil.set(user.getPhone(), code,60);
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        valueOperations.set(user.getPhone(), code,1, TimeUnit.MINUTES);
 
         return R.success("短信发送成功");
     }
@@ -63,13 +66,13 @@ public class UserController {
         //用户输入的验证码
         String code = param.get("code");
 
-        String codeInRedis =(String) redisUtil.get(phone);
+        String codeInRedis =(String) redisTemplate.opsForValue().get(phone);
 
         User user = userService.login(phone, code, codeInRedis);
         if (user == null) {
             return R.error("登录失败");
         }else {
-            redisUtil.del(phone);
+            redisTemplate.delete(phone);
             session.setAttribute("user", user);
         }
         return R.success(user);

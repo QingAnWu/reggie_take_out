@@ -7,14 +7,17 @@ import com.qingAn.reggie.mapper.CategoryMapper;
 import com.qingAn.reggie.mapper.DishFlavorMapper;
 import com.qingAn.reggie.mapper.DishMapper;
 import com.qingAn.reggie.service.DishService;
-import com.qingAn.reggie.utils.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +43,7 @@ public class DishServiceImpl implements DishService {
     private CategoryMapper categoryMapper;
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisTemplate redisTemplate;
 
     /**
      * 菜品保存方法
@@ -82,6 +85,8 @@ public class DishServiceImpl implements DishService {
 
         //4. 批量保存口味信息
         dishFlavorMapper.saveBatch(dishFlavorList);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
     }
 
     /**
@@ -151,6 +156,9 @@ public class DishServiceImpl implements DishService {
         //4. 批量保存口味信息
         dishFlavorMapper.saveBatch(dishFlavorList);
 
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
+
     }
 
     /**
@@ -162,6 +170,8 @@ public class DishServiceImpl implements DishService {
     public void updateStatus0(List ids, Dish dish) {
         dish.setUpdateTime(LocalDateTime.now());
         dishMapper.updateStatus0(ids, dish);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
     }
 
     /**
@@ -173,6 +183,8 @@ public class DishServiceImpl implements DishService {
     public void updateStatus1(List ids, Dish dish) {
         dish.setUpdateTime(LocalDateTime.now());
         dishMapper.updateStatus1(ids, dish);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
     }
 
     /**
@@ -183,6 +195,8 @@ public class DishServiceImpl implements DishService {
     @Override
     public void deleteDish(List ids) {
         dishMapper.deleteDish(ids);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
     }
 
     /**
@@ -195,10 +209,10 @@ public class DishServiceImpl implements DishService {
     public List<DishDto> findByCategoryId(Long categoryId, Integer status) {
 
         List<DishDto> dishDtoList = null;
+        ValueOperations valueOperations = redisTemplate.opsForValue();
         //1. 先查询redis，查看redis是否存在该类别的菜品
         String key = "dish_"+categoryId+"_"+status;
-        dishDtoList = (List<DishDto>) redisUtil.get(key);
-
+        dishDtoList = (List<DishDto>)valueOperations.get(key);
 
         if (dishDtoList==null){
             List<Dish> dishList = dishMapper.findByCategoryId(categoryId, status);
@@ -217,7 +231,7 @@ public class DishServiceImpl implements DishService {
             }).collect(Collectors.toList());
 
             //如果菜品是从数据库中查询出来的，那么必须要添加到缓存中 ，缓存保留一天
-            redisUtil.set(key,dishDtoList,60*60*24);
+            valueOperations.set(key,dishDtoList,60*24, TimeUnit.MINUTES);
         }
         return dishDtoList;
     }
